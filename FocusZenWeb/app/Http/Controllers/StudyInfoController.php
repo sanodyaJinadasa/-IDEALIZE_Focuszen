@@ -6,6 +6,8 @@ use DB;
 use App\Models\Study_info;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+
 
 class StudyInfoController extends Controller
 {
@@ -35,14 +37,85 @@ class StudyInfoController extends Controller
 
 
 
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'hours' => 'required',
+    //         'date' => 'required|date',
+    //     ]);
+
+    //     $userId = Auth::id();
+    //     $existingRecord = Study_info::where('user_id', $userId)
+    //         ->where('date', $request->date)
+    //         ->first();
+
+    //     if ($existingRecord) {
+    //         $existingRecord->update([
+    //             'hours' => $request->hours,
+    //         ]);
+    //     } else {
+    //         Study_info::create([
+    //             'user_id' => $userId,
+    //             'hours' => $request->hours,
+    //             'date' => $request->date,
+    //         ]);
+    //     }
+
+    //     $totalHours = Study_info::where('user_id', $userId)->where('date', $request->date)->sum('hours');
+
+    //     $badge = Badge::where('status', 1)
+    //         ->where('hours', '<=', $totalHours)
+    //         // ->whereNotIn('id', function ($query) use ($userId) {
+    //         //     $query->select('badge_id')
+    //         //         ->from('user_badges')
+    //         //         ->where('user_id', $userId);
+    //         // })
+    //         ->orderBy('hours', 'desc')
+    //         ->first();
+
+    //     if ($badge) {
+    //         $existingBadge = DB::table('user_badges')
+    //             ->where('user_id', $userId)
+    //             ->whereDate('awarded_at', now()->toDateString()) // Check for same date
+    //             ->first();
+
+    //         if ($existingBadge) {
+    //             DB::table('user_badges')
+    //                 ->where('id', $existingBadge->id)
+    //                 ->update([
+    //                     'badge_id' => $badge->id,
+    //                     'awarded_at' => now(),
+    //                 ]);
+    //         } else {
+    //             DB::table('user_badges')->insert([
+    //                 'user_id' => $userId,
+    //                 'badge_id' => $badge->id,
+    //                 'awarded_at' => now(),
+    //             ]);
+    //         }
+
+    //         return redirect()->route('studyinfo.index')
+    //             ->with('success', 'Study info saved successfully!')
+    //             ->with('badge', $badge);
+    //     }
+
+    //     return redirect()->route('studyinfo.index')->with('success', 'Study info saved successfully!');
+    // }
+
+
+
+
+
     public function store(Request $request)
     {
         $request->validate([
-            'hours' => 'required',
+            'hours' => 'required|numeric|min:0.1',
             'date' => 'required|date',
         ]);
 
         $userId = Auth::id();
+
+        // Update if existing record found
         $existingRecord = Study_info::where('user_id', $userId)
             ->where('date', $request->date)
             ->first();
@@ -59,22 +132,21 @@ class StudyInfoController extends Controller
             ]);
         }
 
-        $totalHours = Study_info::where('user_id', $userId)->where('date', $request->date)->sum('hours');
+        // Total study hours for that day
+        $totalHours = Study_info::where('user_id', $userId)
+            ->where('date', $request->date)
+            ->sum('hours');
 
+        // Find eligible badge
         $badge = Badge::where('status', 1)
             ->where('hours', '<=', $totalHours)
-            // ->whereNotIn('id', function ($query) use ($userId) {
-            //     $query->select('badge_id')
-            //         ->from('user_badges')
-            //         ->where('user_id', $userId);
-            // })
             ->orderBy('hours', 'desc')
             ->first();
 
         if ($badge) {
             $existingBadge = DB::table('user_badges')
                 ->where('user_id', $userId)
-                ->whereDate('awarded_at', now()->toDateString()) // Check for same date
+                ->whereDate('awarded_at', now()->toDateString())
                 ->first();
 
             if ($existingBadge) {
@@ -91,14 +163,27 @@ class StudyInfoController extends Controller
                     'awarded_at' => now(),
                 ]);
             }
-
-            return redirect()->route('studyinfo.index')
-                ->with('success', 'Study info saved successfully!')
-                ->with('badge', $badge);
         }
 
-        return redirect()->route('studyinfo.index')->with('success', 'Study info saved successfully!');
+        try {
+            $response = Http::get('http://127.0.0.1:5000/motivate', [
+                'minutes' => $totalHours * 60
+            ]);
+
+
+            $motivation = $response->successful()
+                ? $response->json()['message'] ?? 'Keep going!'
+                : 'Stay strong and focused!';
+        } catch (\Exception $e) {
+            $motivation = 'You are doing great! Keep it up!';
+        }
+
+        return redirect()->route('studyinfo.index')
+            ->with('success', 'Study info saved successfully!')
+            ->with('badge', $badge)
+            ->with('motivation', $motivation);
     }
+
 
 
 

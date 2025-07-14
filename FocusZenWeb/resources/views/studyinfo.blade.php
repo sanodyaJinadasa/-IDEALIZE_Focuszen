@@ -44,7 +44,8 @@
                         max="{{ now()->toDateString() }}" required>
 
                     <label>Study Hours:</label>
-                    <input type="number" name="hours" step="0.1" required>
+                    <input type="number" name="hours" step="0.1" required min="0" max="24"
+                        placeholder="Enter hours studied" required>
 
                     <button type="submit">Save Study Info</button>
                 </form>
@@ -139,4 +140,48 @@
             </div>
         </div>
     </div>
+
+
+
+
+    {{-- @if (session('motivation'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'info',
+                title: 'Stay Motivated!',
+                text: '{{ session('motivation') }}',
+                confirmButtonColor: '#3085d6',
+                timer: 5000
+            });
+        });
+    </script>
+@endif --}}
+
+
+@if (session('success') || session('motivation'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'success',
+                title: 'Stay Motivated!',
+                html: `
+                    <p>{{ session('success') }}</p>
+                    @if (session('motivation'))
+                        <hr>
+                        <p style="color:#3f9610; font-weight:bold; font-size:25px;">
+                            {{ session('motivation') }}
+                        </p>
+                    @endif
+                `,
+                confirmButtonColor: '#28a745',
+                timer: 6000
+            });
+        });
+    </script>
+@endif
+
+
+
+
 @endsection
