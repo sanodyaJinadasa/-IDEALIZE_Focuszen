@@ -43,8 +43,8 @@
                             class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a title="Click to Visit Website" href="{{ route('/') }}" class="nav-link"
-                        style="padding: 0 17px;"><img style="width: 40px;" src="{{ asset('system/images/logo.jpg') }}"
+                    <a title="Click to Visit Home Page" href="{{ route('/') }}" class="nav-link"
+                        style="padding: 0 17px;"><img style="width: 40px; border-radius: 10px;" src="{{ asset('system/images/logo.jpg') }}"
                             alt="logo"></a>
                 </li>
             </ul>
