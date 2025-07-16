@@ -31,7 +31,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- fullCalendar -->
     <link rel="stylesheet" href="{{ asset('plugins/fullcalendar/main.css') }}">
-
 </head>
 
 <body
@@ -44,12 +43,11 @@
                             class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a title="Click to Visit Website" href="{{ route('/') }}" class="nav-link" target="_blank"
+                    <a title="Click to Visit Website" href="{{ route('/') }}" class="nav-link"
                         style="padding: 0 17px;"><img style="width: 40px;" src="{{ asset('system/images/logo.jpg') }}"
                             alt="logo"></a>
                 </li>
             </ul>
-
             <ul class="navbar-nav ml-auto">
 
                 <li class="nav-item">

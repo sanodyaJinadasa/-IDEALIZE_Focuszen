@@ -739,6 +739,15 @@
 }
 
 
+
+
+
+
+.edit-com {
+    color: #059669;
+    font-size: 20px;
+}
+
  @media (min-width: 576px) {
      .container-fluid {
          background-color: white;
@@ -764,3 +773,5 @@
          font-size: 50px !important;
      }
  }
+
+

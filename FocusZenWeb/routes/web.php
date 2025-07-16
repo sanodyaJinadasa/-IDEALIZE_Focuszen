@@ -63,6 +63,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
     Route::get('/questions/{question}', [QuestionController::class, 'show'])->name('questions.show');
     Route::post('/questions/{question}/answers', [AnswerController::class, 'store'])->name('answers.store');
+    Route::put('/questions/{id}', [QuestionController::class, 'update'])->name('questions.update');
+
 
     // admin
     Route::get('/dashboard', function () {
