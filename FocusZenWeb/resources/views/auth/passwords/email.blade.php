@@ -10,7 +10,7 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card row">
                 <div class="card-header">{{ __('Reset Password') }}</div>
 
                 <div class="card-body">

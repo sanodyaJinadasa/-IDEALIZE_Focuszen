@@ -189,7 +189,7 @@
             <hr>
             <div class="row mt-1">
                 <div class="col all-right">
-                    <p class="font-family-custom">&copy; 2024 FocusZen. All Rights Reserved.</p>
+                    <p class="font-family-custom">&copy; 2025 FocusZen. All Rights Reserved.</p>
                 </div>
             </div>
         </div>
