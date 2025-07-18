@@ -10,9 +10,6 @@ class YouTubeAnalysisController extends Controller
     {
         $url = $request->input('youtube_url');
 
-
-        // Extract video ID from the URL
-        // preg_match('/(?:v=|\/)([0-9A-Za-z_-]{11})/', $url, $matches);
         preg_match('/(?:youtube\.com\/.*v=|youtu\.be\/)([0-9A-Za-z_-]{11})/', $url, $matches);
 
         if (empty($matches)) {
@@ -25,12 +22,9 @@ class YouTubeAnalysisController extends Controller
         }
 
 
-        // Execute Python script for analysis
         $scriptPath = base_path('scripts/youtube_analysis.py');
-        // $command = escapeshellcmd("python $scriptPath $videoId");
 
 
-        // Capture the output of the Python script
         $command = escapeshellcmd("python \"$scriptPath\" $videoId");
         \Log::info("YouTube Analysis Command: " . $command);
 

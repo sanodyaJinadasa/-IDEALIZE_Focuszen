@@ -4,15 +4,12 @@ import re
 import emoji
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-API_KEY = 'AIzaSyAqj6nRQ50AacJs86Fmv6Dxfy--riJwyOk'
-
-# API_KEY = 'AIzaSyA9JhsOv4doKFd5C2gbHnzPy43_6as5898'
+API_KEY = ''
 
 
 def analyze_comments(video_id):
     youtube = build('youtube', 'v3', developerKey=API_KEY)
 
-    # Fetch comments
     comments = []
     nextPageToken = None
     while len(comments) < 600:
@@ -30,14 +27,12 @@ def analyze_comments(video_id):
         if not nextPageToken:
             break
 
-    # Sentiment analysis
     analyzer = SentimentIntensityAnalyzer()
     polarity = [analyzer.polarity_scores(c)['compound'] for c in comments]
     positive_count = sum(1 for p in polarity if p > 0.05)
     negative_count = sum(1 for p in polarity if p < -0.05)
     neutral_count = len(polarity) - positive_count - negative_count
 
-    # Calculate rating (example: scale 1 to 5)
     total_comments = len(polarity)
     if total_comments == 0:
         return "No comments available for analysis."
@@ -45,11 +40,10 @@ def analyze_comments(video_id):
     positive_ratio = positive_count / total_comments
     negative_ratio = negative_count / total_comments
 
-    # Assign a rating based on the sentiment distribution
-    rating = 1 + (positive_ratio - negative_ratio) * 4  # Scale: 1 (worst) to 5 (best)
-    rating = max(1, min(5, round(rating)))  # Ensure rating stays between 1 and 5
+    rating = 1 + (positive_ratio - negative_ratio) * 4
+    rating = max(1, min(5, round(rating)))
 
-    # Return the rating and summary
+
     return f"Video Sentiment Rating: {rating}/5\n" \
            f"Positive: {positive_count}, Negative: {negative_count}, Neutral: {neutral_count}"
 

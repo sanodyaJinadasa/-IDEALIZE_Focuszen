@@ -17,14 +17,12 @@ class StudyInfoController extends Controller
         $startOfMonth = now()->startOfMonth()->toDateString();
         $endOfMonth = now()->endOfMonth()->toDateString();
 
-        // Fetch study data for the current month
         $studyInfos = Study_info::where('user_id', $userId)
             ->where('status', 1)
             ->whereBetween('date', [$startOfMonth, $endOfMonth])
             ->get()
             ->keyBy('date');
 
-        // Prepare all days of the current month
         $dates = collect();
         for ($date = now()->startOfMonth(); $date <= now()->endOfMonth(); $date->addDay()) {
             $dates->put($date->toDateString(), $studyInfos[$date->toDateString()]->hours ?? 0);
@@ -115,7 +113,6 @@ class StudyInfoController extends Controller
 
         $userId = Auth::id();
 
-        // Update if existing record found
         $existingRecord = Study_info::where('user_id', $userId)
             ->where('date', $request->date)
             ->first();
@@ -132,12 +129,10 @@ class StudyInfoController extends Controller
             ]);
         }
 
-        // Total study hours for that day
         $totalHours = Study_info::where('user_id', $userId)
             ->where('date', $request->date)
             ->sum('hours');
 
-        // Find eligible badge
         $badge = Badge::where('status', 1)
             ->where('hours', '<=', $totalHours)
             ->orderBy('hours', 'desc')

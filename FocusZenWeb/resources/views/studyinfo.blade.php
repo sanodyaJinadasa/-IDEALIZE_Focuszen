@@ -144,20 +144,6 @@
 
 
 
-    {{-- @if (session('motivation'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            Swal.fire({
-                icon: 'info',
-                title: 'Stay Motivated!',
-                text: '{{ session('motivation') }}',
-                confirmButtonColor: '#3085d6',
-                timer: 5000
-            });
-        });
-    </script>
-@endif --}}
-
 
 @if (session('success') || session('motivation'))
     <script>

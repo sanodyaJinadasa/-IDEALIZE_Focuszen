@@ -84,7 +84,7 @@ if __name__ == '__main__':
 # app = Flask(__name__)
 
 
-# openai.api_key = "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"
+# openai.api_key = ""
 
 # def generate_gpt_motivation(minutes):
 #     prompt = (

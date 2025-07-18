@@ -27,19 +27,7 @@ class MusicController extends Controller
     public function chat(Request $request)
     {
 
-        // $request->validate([
-        //     'message' => 'required|string'
-        // ]);
-        // $client = OpenAI::client('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');
-        // $response = $client->completions()->create([
-        //     'model' => 'gpt-4',
-        //     'prompt' => $request->input('message'),
-        //     'max_tokens' => 100
-        // ]);
-
-        // return response()->json(['reply' => $response['choices'][0]['text']]);
-
-        $client = OpenAI::client('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');
+       $client = OpenAI::client(env('OPENAI_API_KEY'));
 
         try {
             $response = $client->completions()->create([
