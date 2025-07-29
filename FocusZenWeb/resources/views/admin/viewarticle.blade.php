@@ -45,7 +45,6 @@
 
                                     <td>
                                         @if ($article->status == 1)
-                                            {{-- Show Delete button --}}
                                             <form action="{{ route('Article.destroy', $article->id) }}" method="POST"
                                                 style="display:inline-block;">
                                                 @csrf
@@ -57,7 +56,6 @@
                                             </form>
                                        @endif
                                          @if ($article->status == 0)
-                                            {{-- Show Restore button --}}
                                             <form action="{{ route('Article.restore', $article->id) }}" method="POST"
                                                 style="display:inline-block;">
                                                 @csrf
