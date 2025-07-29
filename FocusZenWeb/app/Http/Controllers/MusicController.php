@@ -99,7 +99,7 @@ class MusicController extends Controller
     {
 
 
-      $articles = study_article::where('status', 1)
+      $articles = study_article::whereIn('status', [1, 3])
             ->orderBy('created_at', 'desc')
             ->get();
 

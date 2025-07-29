@@ -41,6 +41,24 @@ class StudyArticleController extends Controller
         return redirect()->back()->with('success', 'Article added successfully!');
     }
 
+
+
+    public function storeuserartical(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'url' => 'required|string|url|max:1000',
+        ]);
+
+        $article = new study_article();
+        $article->title = $request->title;
+        $article->url = $request->url;
+        $article->status = 2;
+        $article->save();
+
+        return redirect()->back()->with('success', 'Article added successfully!');
+    }
+
     /**
      * Display the specified resource.
      */
@@ -86,6 +104,27 @@ class StudyArticleController extends Controller
 
         return redirect()->route('Article.index')->with('success', 'Article restored successfully!');
     }
+
+
+
+
+    public function approve($id)
+{
+    $article = study_article::findOrFail($id);
+    $article->status = 3;
+    $article->save();
+
+    return redirect()->back()->with('success', 'Article approved successfully!');
+}
+
+public function unapprove($id)
+{
+    $article = study_article::findOrFail($id);
+    $article->status = 2;
+    $article->save();
+
+    return redirect()->back()->with('success', 'Article unapproved successfully!');
+}
 
 
 }

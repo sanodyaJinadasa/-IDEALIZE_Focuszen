@@ -45,6 +45,7 @@ Route::get('/articals', [MusicController::class, 'articalindex'])->name('artical
 Route::get('/community', [QuestionController::class, 'index'])->name('community');
 Route::get('/top-focuzers', [ChallengeController::class, 'topFocuzers'])->name('topfocuzers.index');
 Route::get('/study-challenges', [ChallengeController::class, 'showChallenges'])->name('userchallenges.index');
+Route::post('/articles', [StudyArticleController::class, 'storeuserartical'])->name('articles.store');
 
 
 Route::middleware(['auth'])->group(function () {
@@ -91,6 +92,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/articles/{id}', [StudyArticleController::class, 'update'])->name('Article.update');
     Route::delete('/admin/articles/{id}', [StudyArticleController::class, 'destroy'])->name('Article.destroy');
     Route::post('/admin/articles/{id}/restore', [StudyArticleController::class, 'restore'])->name('Article.restore');
+    Route::post('/articles/{id}/approve', [StudyArticleController::class, 'approve'])->name('Article.approve');
+    Route::post('/articles/{id}/unapprove', [StudyArticleController::class, 'unapprove'])->name('Article.unapprove');
 
 
 });

@@ -35,7 +35,7 @@
                                     </td>
                                     <td>
 
-                                        <!-- Edit Button -->
+
                                         <a href="{{ route('Article.edit', $article->id) }}" class="btn btn-warning btn-sm">
                                             Edit
                                         </a>
@@ -55,7 +55,8 @@
                                                     Delete
                                                 </button>
                                             </form>
-                                        @else
+                                       @endif
+                                         @if ($article->status == 0)
                                             {{-- Show Restore button --}}
                                             <form action="{{ route('Article.restore', $article->id) }}" method="POST"
                                                 style="display:inline-block;">
@@ -63,6 +64,26 @@
                                                 <button type="submit" class="btn btn-success btn-sm"
                                                     onclick="return confirm('Are you sure you want to restore this article?')">
                                                     Restore
+                                                </button>
+                                            </form>
+                                        @endif
+
+                                        @if ($article->status == 2)
+                                            <form action="{{ route('Article.approve', $article->id) }}" method="POST"
+                                                style="display:inline-block;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary btn-sm"
+                                                    onclick="return confirm('Are you sure you want to approve this article?')">
+                                                    Approve
+                                                </button>
+                                            </form>
+                                        @elseif ($article->status == 3)
+                                            <form action="{{ route('Article.unapprove', $article->id) }}" method="POST"
+                                                style="display:inline-block;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Are you sure you want to unapprove (delete) this article?')">
+                                                    Unapprove
                                                 </button>
                                             </form>
                                         @endif

@@ -4,7 +4,7 @@ import re
 import emoji
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-API_KEY = ''
+API_KEY = 'AIzaSyAqj6nRQ50AacJs86Fmv6Dxfy--riJwyOk'
 
 
 def analyze_comments(video_id):
