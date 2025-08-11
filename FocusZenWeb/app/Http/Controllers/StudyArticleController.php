@@ -70,6 +70,7 @@ class StudyArticleController extends Controller
 
     public function edit($id)
     {
+        // edit
         $article = study_article::findOrFail($id);
         return view('admin.editarticle', compact('article'));
     }
