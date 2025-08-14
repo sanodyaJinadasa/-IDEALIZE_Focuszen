@@ -161,9 +161,14 @@ class StudyInfoController extends Controller
         }
 
         try {
-            $response = Http::get('http://127.0.0.1:5000/motivate', [
+            // $response = Http::get('http://127.0.0.1:5000/motivate', [
+            //     'minutes' => $totalHours * 60
+            // ]);
+
+              $response = Http::get('https://focuszen-motivation.onrender.com/motivate', [
                 'minutes' => $totalHours * 60
             ]);
+
 
 
             $motivation = $response->successful()

@@ -198,7 +198,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="card card5c wow fadeInRight">
-                        <h4>Earn Batchs</h4>
+                        <h4>Earn Badges</h4>
                         <p>Unlock achievement badges as you complete your study hours! Stay motivated by tracking your
                             progress and earning rewards for your dedication. Every milestone brings a new badge. !</p>
                         <a href="{{ route('study_progress.index') }}" class="button">Try it now</a>
