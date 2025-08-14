@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class YouTubeAnalysisController extends Controller
 {
@@ -12,33 +12,23 @@ class YouTubeAnalysisController extends Controller
 
         preg_match('/(?:youtube\.com\/.*v=|youtu\.be\/)([0-9A-Za-z_-]{11})/', $url, $matches);
 
-        if (empty($matches)) {
+        if (empty($matches[1])) {
             return back()->with('error', 'Invalid YouTube URL');
         }
 
         $videoId = $matches[1];
-        if (empty($matches[1])) {
-            return back()->with('error', 'Invalid YouTube URL or missing video ID.');
-        }
 
-
-        $scriptPath = base_path('scripts/youtube_analysis.py');
-
-
-        $command = escapeshellcmd("python \"$scriptPath\" $videoId");
-        \Log::info("YouTube Analysis Command: " . $command);
-
-        exec($command . " 2>&1", $output, $returnVar);
-
-        if ($returnVar !== 0) {
-            return back()->with('error', 'Error analyzing YouTube video: ' . implode("\n", $output));
-        }
-
-
-        $analysisResult = implode("\n", $output);
-
-        return view('youtube_form', [
-            'analysisResult' => $analysisResult,
+        $response = Http::post('https://focuszen-yt.onrender.com/analyze', [
+            'video_id' => $videoId
         ]);
+
+        if ($response->successful()) {
+            $result = $response->json();
+            return view('youtube_form', [
+                'analysisResult' => $result
+            ]);
+        } else {
+            return back()->with('error', 'Error analyzing video: ' . $response->body());
+        }
     }
 }
