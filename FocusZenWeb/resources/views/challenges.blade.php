@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container sec py-5">
-    <h2 class="text-center mb-4">🎯 Study Challenges</h2>
+    <h2 class="text-center mb-4 communityhead">🎯 Study Challenges</h2>
 
     <div class="row justify-content-center">
         @foreach ($challenges as $challenge)

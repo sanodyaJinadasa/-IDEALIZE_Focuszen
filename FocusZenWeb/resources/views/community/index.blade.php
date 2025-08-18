@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/community.css') }}">
 
     <div class="row flex container sec">
-        <div class="col-md-6 border-r">
+        <div class="col-md-6 border-r communityhead">
             <h2 class="text-xl font-bold mb-3">Community Questions</h2>
 
             @foreach ($questions as $question)
@@ -13,7 +13,6 @@
                     </a>
                     <p class="text-sm text-gray-500 q-ask">
                         Asked by {{ $question->user->name }} &nbsp;
-
                         @auth
                             @if (auth()->id() === $question->user_id)
                                 <button class="btn btn-link text-green-400 text-sm ml-2 p-0" data-bs-toggle="modal"
@@ -52,7 +51,7 @@
 
         </div>
 
-        <div class="col-md-6 p-4">
+        <div class="col-md-6 ">
             <h2 class="text-xl font-bold mb-4">Ask a Question</h2>
             <form action="{{ route('questions.store') }}" method="POST">
                 @csrf

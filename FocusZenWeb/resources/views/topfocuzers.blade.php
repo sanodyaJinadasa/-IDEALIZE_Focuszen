@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container sec py-5">
-        <h2 class="text-center mb-4">🔥 Top 10 Focuzers</h2>
+        <h2 class="text-center mb-4 communityhead">🔥 Top 10 Focuzers</h2>
 
         <div class="row justify-content-center">
             @foreach ($topUsers as $index => $entry)

@@ -158,7 +158,8 @@
                 <div class="col-md-6">
                     <div class="card card6c wow fadeInRight">
                         <h4>Study Community</h4>
-                        <p>Not sure what to ask? That’s okay! Just type your study question, confusion, or anything you're stuck with — and our amazing community of learners will help you out.</p>
+                        <p>Not sure what to ask? That’s okay! Just type your study question, confusion, or anything you're
+                            stuck with — and our amazing community of learners will help you out.</p>
                         <a href="{{ route('community') }}" class="button">Try it now</a>
                     </div>
                 </div>
@@ -431,6 +432,4 @@
             </div>
         </div>
     </section>
-
-
 @endsection
